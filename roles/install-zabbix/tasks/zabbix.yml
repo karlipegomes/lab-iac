@@ -1,0 +1,30 @@
+- name: Install Repo Zabbix 5.0
+  yum:
+    name: https://repo.zabbix.com/zabbix/5.0/rhel/7/x86_64/zabbix-release-5.0-1.el7.noarch.rpm
+    state: present
+
+- name: Install Zabbix Agent and Server
+  yum:
+    name: {{ zabbix-server-packages }} 
+    state: latest
+  vars:
+   zabbix-server-packages:
+   - zabbix-server-mysql 
+   - zabbix-agent  
+
+- name: Enable Red Hat Software Collections
+  yum:
+    name: centos-release-scl
+    state: latest
+
+- name: Enable Zabbix-Frontend repository
+  command: sed -i 's/^enabled=0/enabled=1/g' /etc/yum.repos.d/zabbix.repo
+
+- name: Install Zabbix frontend
+  yum:
+    name: {{ zabbix-frontend-packages }}
+    state: latest
+  vars:
+   zabbix-frontend-packages:
+    - zabbix-web-mysql-scl 
+    - zabbix-apache-conf-scl

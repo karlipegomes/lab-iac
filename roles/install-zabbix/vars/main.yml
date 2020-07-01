@@ -1,5 +1,5 @@
 ---
-zabbix-db: zabbix
-zabbix-user: zabbix
-zabbix-pass: Z4bb1x-Pa$$z
-mysql-root-password: q1w2e3r4T%
+zabbix_db: zabbix
+zabbix_user: zabbix
+zabbix_pass: Z4bb1x-Pa$$z
+mysql_root_password: q1w2e3r4T%

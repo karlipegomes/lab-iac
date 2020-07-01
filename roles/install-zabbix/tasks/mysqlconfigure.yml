@@ -1,0 +1,32 @@
+---
+- name: Create Database
+  mysql_db:    
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    name: "{{ zabbix_db }}"
+    encoding: utf8
+    collation: utf8_bin
+    state: present
+
+- name: Create MySQL user
+  mysql_user:
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    name: "{{ zabbix_user }}"
+    password: "{{ zabbix_pass }}"
+    priv: "{{ zabbix_db }}.*:ALL,GRANT"
+    state: present
+
+- name: Copy to tmp
+  copy:
+    src: /usr/share/doc/zabbix-server-mysql-5.0.1/create.sql.gz
+    dest: /tmp/
+    remote_src: yes
+
+- name: Import Database
+  mysql_db:
+    login_user: root
+    login_password: "{{ mysql_root_password }}"
+    name: "{{ zabbix_db }}"
+    state: import
+    target: '/usr/share/doc/zabbix-server-mysql-5.0.1/create.sql.gz'

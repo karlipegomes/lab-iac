@@ -1,3 +1,5 @@
 
-- include_tasks: zabbix.yml
-- include_tasks: mysql.yml
+- include_tasks: zabbixinstall.yml
+- include_tasks: mysqlinstall.yml
+- include_tasks: mysqlconfigure.yml
+- include_tasks: zabbixfinishing.yml

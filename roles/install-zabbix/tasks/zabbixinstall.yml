@@ -5,10 +5,10 @@
 
 - name: Install Zabbix Agent and Server
   yum:
-    name: {{ zabbix-server-packages }} 
+    name: "{{ zabbix_server_packages }}"
     state: latest
   vars:
-   zabbix-server-packages:
+   zabbix_server_packages:
    - zabbix-server-mysql 
    - zabbix-agent  
 
@@ -18,13 +18,19 @@
     state: latest
 
 - name: Enable Zabbix-Frontend repository
-  command: sed -i 's/^enabled=0/enabled=1/g' /etc/yum.repos.d/zabbix.repo
+  replace:
+    path: /etc/yum.repos.d/zabbix.repo
+    after: 'zabbix-frontend'
+    before: 'gpgkey'
+    regexp: '^enabled=0'
+    replace: enabled=1
+
 
 - name: Install Zabbix frontend
   yum:
-    name: {{ zabbix-frontend-packages }}
+    name: "{{ zabbix_frontend_packages }}"
     state: latest
   vars:
-   zabbix-frontend-packages:
+   zabbix_frontend_packages:
     - zabbix-web-mysql-scl 
     - zabbix-apache-conf-scl

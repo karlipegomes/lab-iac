@@ -1,0 +1,9 @@
+- name: Restart Full Zabbix
+  service:
+    name: "{{ item }}"
+    state: restarted
+  loop:
+    - zabbix-server
+    - zabbix-agent
+    - httpd 
+    - rh-php72-php-fpm

@@ -1,0 +1,38 @@
+- name: Configure the database for Zabbix server
+  lineinfile:
+    path: /etc/zabbix/zabbix_server.conf
+    regexp: '^# DBPassword='
+    line: DBPassword={{ zabbix_pass }}
+
+- name: Configure frontend timezone
+  lineinfile:
+    path: /etc/opt/rh/rh-php72/php-fpm.d/zabbix.conf
+    regexp: '^; php_value[date.timezone] ='
+    line: php_value[date.timezone] = America/Fortaleza
+
+- name: Firewall - Opening ports
+  firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+  loop:
+    - 80/tcp
+    - 443/tcp
+    - 10050/tcp
+    - 10051/tcp
+
+- name: Firewall - Reload service
+  systemd:
+    name: firewalld
+    state: reloaded
+
+- name: Enabling/starting services ()
+  systemd:
+    enabled: yes
+    name: "{{ item }}"
+  notify: "Restart Full Zabbix"
+  loop:
+    - zabbix-server
+    - zabbix-agent
+    - httpd 
+    - rh-php72-php-fpm

@@ -13,7 +13,7 @@
 
 - name: Firewall - Opening Ports
   firewalld:
-    port: {{ item }}
+    port: "{{ item }}"
     permanent: yes
     immediate: yes
     state: enable

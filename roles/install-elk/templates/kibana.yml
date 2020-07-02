@@ -1,0 +1,2 @@
+elasticsearch.url: "http://{{ ansible_default_ipv4.address }}:9200"
+logging.dest: /var/log/kibana.log

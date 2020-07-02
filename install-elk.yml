@@ -1,0 +1,11 @@
+---
+- name: Apply common configuration to all nodes
+  hosts: elk
+  gather_facts: yes
+  #ignore_errors: yes
+
+  roles:
+  - role: install-elk
+    
+     
+     

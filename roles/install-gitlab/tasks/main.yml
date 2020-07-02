@@ -1,0 +1,21 @@
+- name: Install pre-requisites
+  yum:
+    name: "{{ pre_gitlab_pkgs }}"
+    state: present
+  vars:
+    pre_gitlab_pkgs:
+    - postfix
+    - curl
+    - policycoreutils-python
+
+- name: Install Gitlab repo
+  shell: " curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash"
+
+- name: Install Gitlab
+  yum:
+    name: gitlab-ce
+    state: latest
+  environment:
+    EXTERNAL_URL: http://{{ ansible_fqdn }}
+
+- name: 

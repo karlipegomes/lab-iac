@@ -1,0 +1,91 @@
+- name: Install pre-requisites (java, java-devel)
+  yum:
+    name: "{{ java_packages }}"
+    state: latest
+  vars:
+   java_packages:
+    - java-1.8.0-openjdk
+    - java-1.8.0-openjdk-devel
+
+- name: Copying ELK.repo
+  copy:
+    src: elk.repo
+    dest: /etc/yum.repos.d/
+
+- name: Install ELK packages
+  yum:
+    name: "{{ elk_packages }}"
+    state: latest
+  vars:
+   elk_packages:
+    - elasticsearch 
+    - logstash 
+    - kibana
+
+- name: Firewall - Opening Port to Logstash
+  firewalld:
+    port: 4514/udp
+    permanent: yes
+    immediate: yes
+    state: enabled
+
+- name: Copy Logstash "commands" config file
+  template:
+    src: 01-linuxcommands.conf
+    dest: /etc/logstash/conf.d/
+  notify: 
+    - Start Logstash
+
+- name: Firewall - Opening Port to Elasticsearch
+  firewalld:
+    port: 9200/tcp
+    permanent: yes
+    immediate: yes
+    state: enabled
+
+- name: Copy Elasticsearch "commands" config file
+  template:
+    src: elasticsearch.yml
+    dest: /etc/elasticsearch/
+  notify: 
+    - Start Elasticsearch
+
+- name: Firewall - Opening Port to Kibana
+  firewalld:
+    port: 5601/tcp
+    permanent: yes
+    immediate: yes
+    state: enabled
+
+- name: Touch a kibana log file
+  file:
+    path: /var/log/kibana.log
+    state: touch
+    mode: 0666
+
+- name: Copy Kibana "commands" config file
+  template:
+    src: kibana.yml
+    dest: /etc/kibana/
+  notify: 
+    - Start Kibana
+
+- name: Install NGINX packages
+  yum:
+    name: nginx
+    state: latest
+
+- name: Firewall - Opening Port to NGINX
+  firewalld:
+    port: 80/tcp
+    permanent: yes
+    immediate: yes
+    state: enabled
+
+- name: Copy NGINX config file
+  template:
+    src: elk.conf
+    dest: /etc/nginx/conf.d/
+  notify: 
+    - Start Nginx
+

@@ -1,0 +1,8 @@
+---
+- name: Apply common configuration to all nodes
+  hosts: foreman
+  gather_facts: yes
+  #ignore_errors: yes
+
+  roles:
+  - role: install-foreman 

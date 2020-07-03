@@ -10,7 +10,9 @@
 
 - name: Install Gitlab repo
   shell: " curl -sS https://packages.gitlab.com/install/repositories/gitlab/gitlab-ce/script.rpm.sh | sudo bash"
-
+  args:
+    warn: no
+    
 - name: Firewall - Opening Ports
   firewalld:
     port: "{{ item }}"

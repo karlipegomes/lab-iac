@@ -1,0 +1,73 @@
+- name: Install pre-requisites
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - yum-utils 
+    - git 
+    - ansible 
+    - python3 
+    - libselinux-python3
+
+- name: Add Docker repo
+  shell: yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+  args:
+    creates: /etc/yum.repos.d/docker-ce.repo
+
+- name: Install Docker
+  yum:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - docker-ce
+    - docker-ce-cli 
+    - containerd.io
+
+- name: Install docker-compose Python module
+  shell: pip3 install docker-compose
+
+- name: Download foo.conf
+  get_url:
+    url: https://github.com/docker/compose/releases/download/1.26.1/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}    
+    dest: /usr/local/bin/docker-compose
+    mode: '0755'
+
+- name: Create a symbolic link to /usr/bin/docker-compose
+  file:
+    src: /usr/local/bin/docker-compose
+    dest: /usr/bin/docker-compose
+    state: link
+
+- name: Create a directory if it does not exist
+  file:
+    path: /var/lib/pgdocker
+    state: directory
+    mode: '0755'
+
+- name: Cloning AWX repository
+  git:
+    repo: https://github.com/ansible/awx.git
+    dest: /root/awx
+
+- name: Firewall - Masquerade public 
+  firewalld:
+    masquerade: yes
+    state: enabled
+    permanent: yes
+    immediate: yes
+    zone: public
+
+- name: Firewall - Opening Ports
+  firewalld:
+    service: "{{ awx_ports }}"
+    state: enabled
+    permanent: yes
+    immediate: yes
+  vars:
+    awx_ports:
+      - http
+      - https
+
+- name: Execute playbook
+  shell: ansible-playbook -i /root/awx/installer/inventory /root/awx/installer/install.yml
+    

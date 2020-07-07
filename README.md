@@ -1,9 +1,9 @@
 # lab-iac
 
-    Escolhi separar o projeto do [lab-iac-base](https://github.com/CringerLabs/lab-iac-base) e deste para poder separar melhor as configurações iniciais das configurações de todas as máquinas. A lista de máquinas foi passada no inventário.
+Escolhi separar o projeto do [lab-iac-base](https://github.com/CringerLabs/lab-iac-base) e deste para poder separar melhor as configurações iniciais das configurações de todas as máquinas. A lista de máquinas foi passada no inventário.
 
-    Segue abaixo um desenho preliminar desse Challenge.
-    ![](images/cringerlabs_company.png)
+Segue abaixo um desenho preliminar desse Challenge.
+![](images/cringerlabs_company.png)
 
 
 ## Zabbix

@@ -8,14 +8,19 @@
     name: https://yum.theforeman.org/releases/2.1/el7/x86_64/foreman-release.rpm
     state: present
 
-- name: Install foreman release scl
+- name: Install Katello repo
+  yum:
+    name: https://fedorapeople.org/groups/katello/releases/yum/3.16/katello/el7/x86_64/katello-repos-latest.rpm
+    state: present
+
+- name: Install foreman-release-scl
   yum:
     name: foreman-release-scl
     state: latest
 
-- name: Install Foreman package
+- name: Install katello package
   yum:
-    name: foreman-installer
+    name: katello
     state: latest
     
 - name: Firewall - Opening Ports
@@ -43,10 +48,10 @@
 
 - name: Install Foreman Application
   command: >
-    foreman-installer
+    foreman-installer --scenario katello
 
 - name: Get admin password
-  shell: "grep 'foreman::params::initial_admin_password' /var/log/foreman-installer/foreman.log | awk -F ' ' '{print $(NF)}'| awk 'END{print}'"
+  shell: "grep 'foreman::params::initial_admin_password' /var/log/foreman-installer/katello.log | awk -F ' ' '{print $(NF)}'| awk 'END{print}'"
   register: initial_admin_password
 
 - debug:

@@ -59,6 +59,6 @@ ansible-playbook install-awx.yml
 
 ## Support 
 
-If this project helped you in any way, give them a Star! ⭐️
+If this project helped you in any way, give you a Star! ⭐️
 
 

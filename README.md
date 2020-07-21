@@ -46,4 +46,19 @@ ansible-playbook install-awx.yml
 ```
 
 
+## Autor
+
+👤***Karlipe Gomes*** 
+
+- *Github* - [@CringerLabsProject](https://github.com/cringerlabs/)
+- *LinkedIn* - [@karlipegomes](https://www.linkedin.com/in/cfgomes/)
+- *Website* - [cringerlabs.com](https://www.cringerlabs.com/)
+
+#### Version
+0.5
+
+## Support 
+
+If this project helped you in any way, give them a Star! ⭐️
+
 

@@ -26,7 +26,7 @@
 - name: Install docker-compose Python module
   shell: pip3 install docker-compose
 
-- name: Download foo.conf
+- name: Download docker-compose
   get_url:
     url: https://github.com/docker/compose/releases/download/1.26.1/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}    
     dest: /usr/local/bin/docker-compose

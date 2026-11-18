@@ -8,6 +8,8 @@ metadata:
   description: "Self-challenge to code a complete infrastructure cloud solutions. "
   annotations:
     github.com/project-slug: karlipegomes/lab-iac
+    backstage.io/techdocs-ref: dir:.
+  tags: [ansible, docker, elk, foreman, gitlab, zabbix]
   links:
     - url: https://github.com/karlipegomes/lab-iac
       title: Repository
@@ -24,6 +26,8 @@ metadata:
   description: "Self-challenge to code a complete infrastructure cloud solutions. "
   annotations:
     github.com/project-slug: karlipegomes/lab-iac
+    backstage.io/techdocs-ref: dir:.
+  tags: [ansible, zabbix, elk]
 spec:
   type: infrastructure
   lifecycle: deprecated

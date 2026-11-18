@@ -1,0 +1,10 @@
+site_name: "lab-iac"
+site_description: "Self-challenge to code a complete infrastructure cloud solution"
+repo_url: https://github.com/karlipegomes/lab-iac
+edit_uri: edit/master/docs/
+
+nav:
+  - "Home": index.md
+
+plugins:
+  - techdocs-core
